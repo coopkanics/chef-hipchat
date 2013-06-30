@@ -20,7 +20,7 @@ end
 # Configure the handler
 chef_handler "HipChat::NotifyRoom" do
   source "#{node['chef_handler']['handler_path']}/hipchat-notification-handler.rb"
-  supports :exception => true
+  supports :exception => true, :report => true
   arguments :notify_users => false
   action :enable
 end
