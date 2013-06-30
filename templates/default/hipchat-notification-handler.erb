@@ -27,7 +27,7 @@ module HipChat
           msg = "Run failed for #{node.name} (#{node[:ec2][:public_ipv4]}): #{run_status.formatted_exception}"
           color = 'red'
         else
-          msg = "Run complete for #{node.name} (#{node[:ec2][:public_ipv4]}). #{run_status.elapsed_time}s elapsed."
+          msg  "Run complete for #{node.name} (#{node[:ec2][:public_ipv4]}).\n Run list: [#{node.run_list.join(',')}]\n. #{run_status.elapsed_time}s elapsed."
           color = 'green'
         end
         client = HipChat::Client.new(@api_token)
