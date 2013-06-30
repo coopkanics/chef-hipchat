@@ -23,9 +23,15 @@ module HipChat
 
     def report
       unless node.chef_environment == "dev"
-        msg = "Failure to run on #{node.name}: #{run_status.formatted_exception}"
+        if run_status.failed?
+          msg = "Run failed for #{node.name}: #{run_status.formatted_exception}"
+          color = 'red'
+        else
+          msg = "Run complete for #{node.name}. #{run_status.elapsed_time} elapsed"
+          color = 'green'
+        end
         client = HipChat::Client.new(@api_token)
-        client[@room_name].send("Chef", msg, {:notify => @notify_users, :color => 'red'})
+        client[@room_name].send("Chef", msg, {:notify => @notify_users, :color => color})
       end
     end
   end
